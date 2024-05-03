@@ -4,18 +4,22 @@ import VueStyling from "@/components/VueStyling.vue";
 import Detyra2 from "@/components/Detyra2.vue";
 import TodoList from "@/components/TodoList.vue";
 import Detyra3 from "@/components/Detyra3.vue";
+
+
 </script>
 
 <template>
   <div class="container mt-5">
     <!--  <VueIntro />-->
-<!--    <VueStyling/>-->
+    <!--    <VueStyling/>-->
 
-<!--    <Detyra2/>-->
+    <!--    <Detyra2/>-->
 
-<!--    <TodoList />-->
+        <TodoList />
 
-    <Detyra3 />
+    <!--    <Detyra3 />-->
+
+
   </div>
 </template>
 
