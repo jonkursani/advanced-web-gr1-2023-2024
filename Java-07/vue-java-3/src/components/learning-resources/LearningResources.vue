@@ -5,53 +5,24 @@ import AddLearningResource from "@/components/learning-resources/AddLearningReso
 import {computed, ref} from "vue";
 import AppCard from "@/components/AppCard.vue";
 import AppButton from "@/components/AppButton.vue";
+import {useResourceStore} from "@/stores/resource.store.js";
 
-const resources = ref([]);
-const isAddLearningResourceShown = ref(false);
-const btnText = computed(() => {
-  return isAddLearningResourceShown.value ? 'List of resources' : 'Add resources';
-})
-
-function handleSubmit(formData) {
-  resources.value.unshift({
-    id: new Date().toISOString(),
-    ...formData
-  })
-
-  isAddLearningResourceShown.value = !isAddLearningResourceShown.value;
-}
-
-function deleteResource(id) {
-  resources.value = resources.value.filter(res => res.id !== id);
-}
+const resourceStore = useResourceStore();
 </script>
 
 <template>
   <the-header title="Learning resources"/>
 
-  <app-button
-      class="btn-outline-secondary mt-3 col-12"
-      @click="isAddLearningResourceShown = !isAddLearningResourceShown">
-    {{ btnText }}
-  </app-button>
-
   <div class="mt-3">
-    <add-learning-resource
-        v-if="isAddLearningResourceShown"
-        @handleSubmit="handleSubmit"/>
-
-    <template v-else>
-      <template v-if="resources.length > 0">
-        <learning-resource v-for="resource in resources"
-                           :key="resource.id"
-                           :resource="resource"
-                           @deleteResource="deleteResource"
-                           />
-      </template>
-      <app-card v-else>
-        <h3>No resources</h3>
-      </app-card>
+    <template v-if="resourceStore.resources.length > 0">
+      <learning-resource v-for="resource in resourceStore.resources"
+                         :key="resource.id"
+                         :resource="resource"
+      />
     </template>
+    <app-card v-else>
+      <h3>No resources</h3>
+    </app-card>
   </div>
 </template>
 

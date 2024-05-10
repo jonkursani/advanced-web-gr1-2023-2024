@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LearningResources from "@/components/learning-resources/LearningResources.vue";
 import AddLearningResource from "@/components/learning-resources/AddLearningResource.vue";
+import UpdateLearningResource from "@/components/learning-resources/UpdateLearningResource.vue";
 
 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
         path: '/add',
         name: 'add-resource',
         component: AddLearningResource
+    },
+    {
+        path: '/update/:id',
+        name: 'update-resource',
+        component: UpdateLearningResource
     },
 ]
 
