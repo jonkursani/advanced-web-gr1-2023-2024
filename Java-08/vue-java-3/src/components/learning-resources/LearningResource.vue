@@ -12,9 +12,9 @@ defineProps({
 
 const store = useResourceStore();
 
-function deleteResource(id) {
+async function deleteResource(id) {
   if(confirm('Are you sure you want to delete this resource?')) {
-    store.deleteResource(id)
+    await store.deleteResource(id)
   }
 }
 </script>

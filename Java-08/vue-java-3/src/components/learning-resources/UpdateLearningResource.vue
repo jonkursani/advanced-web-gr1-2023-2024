@@ -16,19 +16,33 @@ const {params} = useRoute();
 const {push} = useRouter();
 const store = useResourceStore();
 
-onMounted(() => {
-  resource.value = store.resources.find(resource => resource.id === params.id);
+onMounted(async () => {
+  // resource.value = store.resources.find(resource => resource.id === params.id);
+  const resourceFromDb = await store.getResource(params.id)
+
+  if(!resourceFromDb) {
+    alert('Resource not found');
+    await push({name: 'resources'});
+  }
+
+  resource.value = resourceFromDb;
+  // console.log(resourceFromDb)
 })
 
-const handleUpdate = () => {
-  store.updateResource(resource.value);
-  push({name: 'resources'});
+const handleUpdate = async () => {
+  await store.updateResource({ id: params.id, ...resource.value });
+  await push({name: 'resources'});
 }
 </script>
 
 <template>
   <the-layout>
-    <transition appear>
+    <transition appear v-if="store.loading">
+      <app-card class="text-center">
+        <h3>Loading...</h3>
+      </app-card>
+    </transition>
+    <transition appear v-else>
       <app-card>
         <template #header>
           <h3>Update resource</h3>
