@@ -1,7 +1,8 @@
 <script setup>
 import {computed, reactive, ref} from "vue";
 import {useAuthStore} from "@/stores/auth.js";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
+import Swal from "sweetalert2";
 
 const authStore = useAuthStore();
 const mode = ref('login');
@@ -34,7 +35,9 @@ const formIsValid = ref(true);
 const error = ref('');
 
 
-const {push} = useRouter();
+// const {push} = useRouter();
+const router = useRouter();
+const route = useRoute();
 
 async function handleSubmit() {
   formIsValid.value = true;
@@ -48,9 +51,17 @@ async function handleSubmit() {
   try {
     if (mode.value === 'login') {
       await authStore.logIn(formData);
-      await push({name: 'home'})
+      const redirectUrl = `${route.query.redirect || "/"}`
+      // console.log(redirectUrl)
+      await router.push(redirectUrl)
     } else {
       await authStore.signUp(formData)
+      await Swal.fire({
+        title: "Signed up successfully!",
+        text: "Please login!",
+        icon: "success"
+      });
+      mode.value = 'login'
     }
   } catch (e) {
     formIsValid.value = false;

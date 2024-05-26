@@ -1,18 +1,22 @@
 import {defineStore} from "pinia";
 import client from "@/helpers/client.js";
 import {computed, ref} from "vue";
+import {jwtDecode} from "jwt-decode";
+
 
 export const useAuthStore = defineStore('auth', () => {
 
     const url = 'https://identitytoolkit.googleapis.com/v1/accounts'
     const apiKey = 'AIzaSyA0_AX5dY1fMwYcUjFYhl_wpaA79boeOVY';
-    const user = ref(JSON.parse(localStorage.getItem('user')) || null)
+    const token = ref(localStorage.getItem('token') || null)
 
-    async function logIn(user){
+    async function logIn(user) {
         const response = await client.post(`${url}:signInWithPassword?key=${apiKey}`, user)
 
-        if(response.data) {
-            localStorage.setItem('user', JSON.stringify(response.data))
+        // console.log(response)
+        if (response.data) {
+            localStorage.setItem('token', response.data.idToken)
+            token.value = response.data.idToken;
         }
 
         // console.log(response)
@@ -23,10 +27,23 @@ export const useAuthStore = defineStore('auth', () => {
         // console.log(response)
     }
 
+    function logOut() {
+        if (isLoggedIn.value) {
+            localStorage.removeItem('token');
+            token.value = null;
+            // await client.post(`${url}:signUp?key=${apiKey}`, user)
+        }
+    }
+
     // getters
     const loggedInUser = computed(() => {
-        return user.value;
+        // nese ka token dekodoje
+        return token.value ? jwtDecode(token.value) : null;
     })
 
-    return { logIn, signUp, loggedInUser }
+    const isLoggedIn = computed(() => {
+        return !!token.value;
+    })
+
+    return {logIn, signUp, loggedInUser, logOut, isLoggedIn}
 })
