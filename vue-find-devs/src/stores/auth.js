@@ -41,6 +41,10 @@ export const useAuthStore = defineStore('auth', () => {
         return token.value ? jwtDecode(token.value) : null;
     })
 
+    // const isAdmin = computed(() => {
+    //     return loggedInUser.value.role === 'admin';
+    // })
+
     const isLoggedIn = computed(() => {
         return !!token.value;
     })

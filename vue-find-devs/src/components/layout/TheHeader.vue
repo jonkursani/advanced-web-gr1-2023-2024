@@ -21,7 +21,7 @@ function onLogOut() {
 <template>
   <nav class="navbar navbar-expand-lg bg-body-secondary">
     <div class="container">
-      <a class="navbar-brand" href="#">{{ title }}</a>
+      <router-link to="/" class="navbar-brand" >{{ title }}</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
               aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -29,10 +29,7 @@ function onLogOut() {
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <RouterLink :to="{name:'home'}" active-class="active" class="nav-link">Home</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink :to="{name:'about'}" active-class="active" class="nav-link">About</RouterLink>
+            <router-link :to="{name:'devs'}" active-class="active" class="nav-link">Developers</router-link>
           </li>
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
