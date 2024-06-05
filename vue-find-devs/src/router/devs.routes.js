@@ -1,6 +1,7 @@
 import DevsList from "@/views/devs/DevsListView.vue";
 import DevDetails from "@/views/devs/DevDetailsView.vue";
 import ContactDev from "@/views/requests/ContactDevView.vue";
+import RegisterDevView from "@/views/devs/RegisterDevView.vue";
 
 export default [
     {
@@ -21,5 +22,11 @@ export default [
                 component: ContactDev,
             }
         ]
+    },
+    {
+        path: '/devs/register',
+        name: 'register-dev',
+        component: RegisterDevView,
+        meta: {requiresAuth: true}
     }
 ]

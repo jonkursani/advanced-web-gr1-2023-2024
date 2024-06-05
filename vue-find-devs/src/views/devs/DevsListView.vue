@@ -33,6 +33,13 @@ onMounted(() => {
       <filter-devs @on-change-area="onFilterDevs"/>
 
       <app-card has-shadow class="mt-4">
+        <div class="text-end  mb-3">
+          <router-link :to="{name: 'register-dev'}"
+            class="btn btn-outline-primary btn-lg rounded-5">
+            Register as Dev
+          </router-link>
+        </div>
+
         <dev-item v-for="dev in filteredDevs" :dev="dev" :key="dev.id"/>
       </app-card>
     </section>
